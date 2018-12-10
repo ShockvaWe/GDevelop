@@ -11,6 +11,7 @@ import { themes } from '../../UI/Theme';
 import { getAllThemes } from '../../CodeEditor/Theme';
 import Window from '../../Utils/Window';
 import PreferencesContext from './PreferencesContext';
+const gd = global.gd;
 
 type Props = {|
   open: boolean,
@@ -98,6 +99,19 @@ export default class PreferencesDialog extends Component<Props, State> {
                   toggled={values.showEventsFunctionsExtensions}
                   labelPosition="right"
                   label="Activate events functions (alpha, please report any bugs)"
+                />
+              </Line>
+              <Line>
+                <Toggle
+                  onToggle={(e, check) => {
+                    gd.ExpressionCodeGenerator.useOldExpressionParser(!check);
+                    this.forceUpdate();
+                  }}
+                  toggled={
+                    !gd.ExpressionCodeGenerator.isUsingOldExpressionParser()
+                  }
+                  labelPosition="right"
+                  label="Use the new expression parser (alpha, please report any bugs)"
                 />
               </Line>
             </Column>
